@@ -235,7 +235,7 @@ Drawing a circle.
 ---
 
 
-#### **Summary Table**
+### **Summary Table**
 
 | **Principle** | **Definition**                               | **Real-Life Example**              |
 | ------------- | -------------------------------------------- | ---------------------------------- |
@@ -350,7 +350,7 @@ Boat sails on water.
 
 ---
 
-#### **Comparison: Method Overloading vs. Method Overriding**
+### **Comparison: Method Overloading vs. Method Overriding**
 
 | **Feature**              | **Method Overloading**                     | **Method Overriding**                   |
 |---------------------------|--------------------------------------------|-----------------------------------------|
@@ -458,7 +458,7 @@ TV is now OFF.
 
 ---
 
-#### **Comparison: Abstract Class vs Interface**
+### **Comparison: Abstract Class vs Interface**
 
 | **Feature**                  | **Abstract Class**                                   | **Interface**                                 |
 |-------------------------------|----------------------------------------------------|----------------------------------------------|
@@ -475,6 +475,7 @@ TV is now OFF.
 - Use an **abstract class** when you want to share code among related classes.  
 - Use an **interface** to define a contract that unrelated classes can implement.  
 
+### Types of Constructors
 
 | **Type of Constructor**                               | **Description**                                        | **Example**                                      |
 |-------------------------------------------------------|--------------------------------------------------------|--------------------------------------------------|
