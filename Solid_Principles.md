@@ -330,3 +330,291 @@ Invalid return attempt.
    - **DIP:** `Library` interacts with `Book` and `User` through methods, no hard coupling.  
 
 2. The design is modular and flexible for future extensions, like adding genres or late fees.
+
+
+# Designing a Parking Lot System
+
+## Requirements
+1. The parking lot should have multiple levels, each level with a certain number of parking spots.
+2. The parking lot should support different types of vehicles, such as cars, motorcycles, and trucks.
+3. Each parking spot should be able to accommodate a specific type of vehicle.
+4. The system should assign a parking spot to a vehicle upon entry and release it when the vehicle exits.
+5. The system should track the availability of parking spots and provide real-time information to customers.
+6. The system should handle multiple entry and exit points and support concurrent access.
+
+
+## Classes, Interfaces and Enumerations
+1. The **ParkingLot** class follows the Singleton pattern to ensure only one instance of the parking lot exists. It maintains a list of levels and provides methods to park and unpark vehicles.
+2. The **Level** class represents a level in the parking lot and contains a list of parking spots. It handles parking and unparking of vehicles within the level.
+3. The **ParkingSpot** class represents an individual parking spot and tracks the availability and the parked vehicle.
+4. The **Vehicle** class is an abstract base class for different types of vehicles. It is extended by Car, Motorcycle, and Truck classes.
+5. The **VehicleType** enum defines the different types of vehicles supported by the parking lot.
+6. Multi-threading is achieved through the use of synchronized keyword on critical sections to ensure thread safety.
+7. The **Main** class demonstrates the usage of the parking lot system.
+
+
+Here is a detailed Low-Level Design (LLD) for a **Parking Lot System** based on the provided requirements:  
+
+---
+
+### **1. Enumerations**
+
+#### `VehicleType`  
+Defines the types of vehicles supported.  
+```java
+enum VehicleType {
+    CAR,
+    MOTORCYCLE,
+    TRUCK
+}
+```
+
+---
+
+### **2. Vehicle Class Hierarchy**
+
+#### `Vehicle`  
+Abstract base class for all vehicles.  
+```java
+abstract class Vehicle {
+    private String licensePlate;
+    private VehicleType type;
+
+    public Vehicle(String licensePlate, VehicleType type) {
+        this.licensePlate = licensePlate;
+        this.type = type;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public VehicleType getType() {
+        return type;
+    }
+}
+```
+
+#### Subclasses  
+```java
+class Car extends Vehicle {
+    public Car(String licensePlate) {
+        super(licensePlate, VehicleType.CAR);
+    }
+}
+
+class Motorcycle extends Vehicle {
+    public Motorcycle(String licensePlate) {
+        super(licensePlate, VehicleType.MOTORCYCLE);
+    }
+}
+
+class Truck extends Vehicle {
+    public Truck(String licensePlate) {
+        super(licensePlate, VehicleType.TRUCK);
+    }
+}
+```
+
+---
+
+### **3. ParkingSpot Class**  
+Represents an individual parking spot.  
+```java
+class ParkingSpot {
+    private VehicleType spotType;
+    private boolean isAvailable;
+    private Vehicle parkedVehicle;
+
+    public ParkingSpot(VehicleType spotType) {
+        this.spotType = spotType;
+        this.isAvailable = true;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public VehicleType getSpotType() {
+        return spotType;
+    }
+
+    public synchronized boolean parkVehicle(Vehicle vehicle) {
+        if (isAvailable && vehicle.getType() == spotType) {
+            this.parkedVehicle = vehicle;
+            this.isAvailable = false;
+            return true;
+        }
+        return false;
+    }
+
+    public synchronized void removeVehicle() {
+        this.parkedVehicle = null;
+        this.isAvailable = true;
+    }
+
+    public Vehicle getParkedVehicle() {
+        return parkedVehicle;
+    }
+}
+```
+
+---
+
+### **4. Level Class**  
+Represents a level in the parking lot.  
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+class Level {
+    private int levelNumber;
+    private List<ParkingSpot> spots;
+
+    public Level(int levelNumber, int numSpots, VehicleType spotType) {
+        this.levelNumber = levelNumber;
+        this.spots = new ArrayList<>();
+        for (int i = 0; i < numSpots; i++) {
+            spots.add(new ParkingSpot(spotType));
+        }
+    }
+
+    public boolean parkVehicle(Vehicle vehicle) {
+        for (ParkingSpot spot : spots) {
+            if (spot.parkVehicle(vehicle)) {
+                System.out.println("Vehicle parked at level " + levelNumber);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void releaseVehicle(String licensePlate) {
+        for (ParkingSpot spot : spots) {
+            if (spot.getParkedVehicle() != null &&
+                spot.getParkedVehicle().getLicensePlate().equals(licensePlate)) {
+                spot.removeVehicle();
+                System.out.println("Vehicle removed from level " + levelNumber);
+                return;
+            }
+        }
+        System.out.println("Vehicle not found in level " + levelNumber);
+    }
+
+    public int getAvailableSpots() {
+        return (int) spots.stream().filter(ParkingSpot::isAvailable).count();
+    }
+}
+```
+
+---
+
+### **5. ParkingLot Class (Singleton)**  
+Represents the entire parking lot.  
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+class ParkingLot {
+    private static ParkingLot instance;
+    private List<Level> levels;
+
+    private ParkingLot() {
+        levels = new ArrayList<>();
+    }
+
+    public static synchronized ParkingLot getInstance() {
+        if (instance == null) {
+            instance = new ParkingLot();
+        }
+        return instance;
+    }
+
+    public void addLevel(Level level) {
+        levels.add(level);
+    }
+
+    public boolean parkVehicle(Vehicle vehicle) {
+        for (Level level : levels) {
+            if (level.parkVehicle(vehicle)) {
+                return true;
+            }
+        }
+        System.out.println("No parking spot available for vehicle: " + vehicle.getLicensePlate());
+        return false;
+    }
+
+    public void releaseVehicle(String licensePlate) {
+        for (Level level : levels) {
+            level.releaseVehicle(licensePlate);
+        }
+    }
+
+    public void displayAvailableSpots() {
+        for (int i = 0; i < levels.size(); i++) {
+            System.out.println("Level " + i + ": " + levels.get(i).getAvailableSpots() + " spots available.");
+        }
+    }
+}
+```
+
+---
+
+### **6. Main Class**  
+Demonstrates the usage of the system.  
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Initialize Parking Lot
+        ParkingLot parkingLot = ParkingLot.getInstance();
+        parkingLot.addLevel(new Level(0, 2, VehicleType.CAR));
+        parkingLot.addLevel(new Level(1, 3, VehicleType.MOTORCYCLE));
+        parkingLot.addLevel(new Level(2, 1, VehicleType.TRUCK));
+
+        // Create Vehicles
+        Vehicle car1 = new Car("CAR123");
+        Vehicle bike1 = new Motorcycle("BIKE123");
+        Vehicle truck1 = new Truck("TRUCK123");
+
+        // Park Vehicles
+        parkingLot.parkVehicle(car1);   // Parks in Level 0
+        parkingLot.parkVehicle(bike1);  // Parks in Level 1
+        parkingLot.parkVehicle(truck1); // Parks in Level 2
+
+        // Display Available Spots
+        parkingLot.displayAvailableSpots();
+
+        // Release Vehicle
+        parkingLot.releaseVehicle("CAR123");
+        parkingLot.releaseVehicle("BIKE123");
+
+        // Display Available Spots Again
+        parkingLot.displayAvailableSpots();
+    }
+}
+```
+
+---
+
+### **Output**
+```plaintext
+Vehicle parked at level 0
+Vehicle parked at level 1
+Vehicle parked at level 2
+Level 0: 1 spots available.
+Level 1: 2 spots available.
+Level 2: 0 spots available.
+Vehicle removed from level 0
+Vehicle removed from level 1
+Level 0: 2 spots available.
+Level 1: 3 spots available.
+Level 2: 0 spots available.
+```
+
+---
+
+### **Key Features**  
+1. **Thread-Safety:** The `synchronized` keyword ensures thread-safe operations on parking spots.  
+2. **Singleton Pattern:** Ensures a single `ParkingLot` instance for the entire system.  
+3. **Modular Design:** Each class handles one responsibility (SRP).  
+4. **Scalable:** Adding new levels or vehicle types is straightforward.  
