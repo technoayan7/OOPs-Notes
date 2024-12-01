@@ -1,42 +1,43 @@
-# OOPS Concept
-
-### Class Vs Object
----
-
-| **Class**                            | **Object**                           |
-|--------------------------------------|--------------------------------------|
-| Blueprint or template for objects.  | Instance of a class.                 |
-| Logical entity.                      | Physical entity.                     |
-| Defines attributes and methods.      | Has specific values for attributes.  |
-| Shared properties across objects.    | Unique representation of the class.  |
-| Example: `Car` class defines structure.| Example: `myCar` is an object of `Car`. |
-
-### Static Vs Non Static Method
----
-
-| **Static Method**                                    | **Non-Static Method**                                |
-|------------------------------------------------------|----------------------------------------------------|
-| Belongs to the class, not an instance.               | Belongs to an instance of the class.               |
-| Can be called without creating an object.            | Requires an object to be called.                  |
-| Accesses only static data and methods.               | Accesses both static and non-static data/methods.  |
-| Called using `ClassName::methodName`.                | Called using `objectName.methodName`.             |
-| Example: `Math::sqrt(x)`.                            | Example: `car.startEngine()`.                     |
-
-### Public Vs Private Constructor
----
-
-| **Public Constructor**                                | **Private Constructor**                             |
-|-------------------------------------------------------|-----------------------------------------------------|
-| Can be accessed and instantiated from outside the class. | Cannot be accessed outside the class.               |
-| Used to create objects freely in any part of the program. | Restricts object creation to within the class itself. |
-| Example: Used when you want to allow external code to create objects. | Example: Used in Singleton design pattern to allow only one instance of a class. |
-| Allows easy creation of multiple instances.           | Ensures only one or controlled instances are created. |
+# 📝 **OOP Concepts Notes**  
 
 ---
 
-**Java Code Examples:**
+## 🎯 **Class vs. Object**
 
-### **Public Constructor Example**
+| **Class**                             | **Object**                             |
+|---------------------------------------|----------------------------------------|
+| Blueprint or template for objects.    | Instance of a class.                   |
+| Logical entity.                      | Physical entity.                       |
+| Defines attributes and methods.      | Has specific values for attributes.    |
+| Shared across objects.               | Unique representation of the class.    |
+| `Car` class defines structure.       | `myCar` is an object of `Car`.         |
+
+---
+
+## 🛠️ **Static vs Non-Static Method**  
+
+| **Static Method**                          | **Non-Static Method**                  |
+|--------------------------------------------|----------------------------------------|
+| Belongs to the class, not an instance.     | Belongs to an instance of the class.   |
+| Can be called without creating an object.  | Requires an object to be called.       |
+| Only static data and methods.              | Both static and non-static data/methods.|
+| Called using `ClassName::methodName`.      | Called using `objectName.methodName`.  |
+| `Math::sqrt(x)`.                          | `car.startEngine()`.                   |
+
+---
+
+## 🔒 **Public vs Private Constructor**  
+
+| **Public Constructor**                          | **Private Constructor**                         |
+|------------------------------------------------|------------------------------------------------|
+| Accessible from outside the class.              | Restricted to within the class.                |
+| Freely creates objects in any program part.     | Limits object creation (e.g., Singleton).      |
+| Used for general object creation.               | Used in Singleton design patterns.             |
+| Multiple instances easily created.             | Controlled/Single instance ensured.            |
+
+### **Java Examples**  
+
+#### **Public Constructor**  
 ```java
 class Car {
     public Car() {  // Public Constructor
@@ -46,14 +47,16 @@ class Car {
 
 public class Main {
     public static void main(String[] args) {
-        Car myCar = new Car();  // Can be instantiated from outside
+        Car myCar = new Car();  // Instantiating from outside
     }
 }
 ```
-**Output:**  
+**Output**:  
+```
 Car created!
+```
 
-### **Private Constructor Example**
+#### **Private Constructor**  
 ```java
 class Singleton {
     private static Singleton instance;
@@ -64,7 +67,7 @@ class Singleton {
 
     public static Singleton getInstance() {
         if (instance == null) {
-            instance = new Singleton();  // Can only be instantiated inside the class
+            instance = new Singleton();  // Only created inside the class
         }
         return instance;
     }
@@ -73,26 +76,33 @@ class Singleton {
 public class Main {
     public static void main(String[] args) {
         Singleton obj1 = Singleton.getInstance();  // Access via method
-        Singleton obj2 = Singleton.getInstance();  // Always returns the same instance
+        Singleton obj2 = Singleton.getInstance();  // Returns same instance
     }
 }
 ```
-**Output:**  
+**Output**:  
+```
 Singleton instance created!
-
-
-### **OOP Principles Notes with Java Code and Real-Life Examples**
+```
 
 ---
 
+## 🔑 **OOP Principles with Examples**  
 
-#### **1. Abstraction**
+| **Principle**     | **Definition**                                | **Real-Life Example**                  |
+|--------------------|-----------------------------------------------|----------------------------------------|
+| **Abstraction**    | Hides internal details; shows relevant parts.| Using an ATM.                          |
+| **Encapsulation**  | Restricts access, exposes via methods.       | Medicine in a capsule.                 |
+| **Inheritance**    | Reuses properties of a parent class.         | Child inherits parent's traits.        |
+| **Polymorphism**   | Same method behaves differently in contexts. | Person acts as Student, Friend, Employee.|
 
-- **Definition**: Hiding implementation details and showing only essential features.
-- **Example**: _Using an ATM to withdraw cash without knowing its internal workings._
+---
 
-**Java Code Example:**
+### 1️⃣ **Abstraction**  
+- **Definition**: Hiding implementation details, exposing only essential features.  
+- **Example**: Using an ATM without knowing its internal workings.  
 
+**Java Example**:  
 ```java
 abstract class Vehicle {
     abstract void move();  // Abstract method
@@ -117,33 +127,28 @@ public class Main {
     }
 }
 ```
-
-_Output:_  
+**Output**:  
+```
 Car moves on roads.  
 Vehicle needs fuel.
+```
 
 ---
 
+### 2️⃣ **Encapsulation**  
+- **Definition**: Wrapping data (variables) and code (methods) together while restricting access.  
+- **Example**: Capsule encloses medicine to protect contents.  
 
-
-#### **2. Encapsulation**
-
-- **Definition**: Wrapping data (variables) and code (methods) together, restricting direct access to them using access modifiers.
-- **Example**: _Capsule encloses medicine to protect its contents._
-
-**Java Code Example:**
-
+**Java Example**:  
 ```java
 class BankAccount {
     private double balance;  // Private variable
 
-    // Getter method
-    public double getBalance() {
+    public double getBalance() {  // Getter
         return balance;
     }
 
-    // Setter method
-    public void setBalance(double balance) {
+    public void setBalance(double balance) {  // Setter
         if (balance > 0) {
             this.balance = balance;
         } else {
@@ -160,19 +165,18 @@ public class Main {
     }
 }
 ```
-
-_Output:_  
+**Output**:  
+```
 Balance: 1000
+```
 
 ---
 
-#### **3. Inheritance**
+### 3️⃣ **Inheritance**  
+- **Definition**: Acquiring properties and methods from a parent class.  
+- **Example**: Child inherits traits from parents.  
 
-- **Definition**: Mechanism to acquire properties and methods from a parent class.
-- **Example**: _Child inherits traits from parents in real life._
-
-**Java Code Example:**
-
+**Java Example**:  
 ```java
 class Animal {
     void eat() {
@@ -194,21 +198,22 @@ public class Main {
     }
 }
 ```
-
-_Output:_  
+**Output**:  
+```
 This animal eats food.  
 Dog barks.
+```
 
 ---
 
-#### **4. Polymorphism**
+### 4️⃣ **Polymorphism**  
+- **Definition**: Ability of a method to behave differently based on context.  
+- **Types**:  
+  - Compile-time (method overloading).  
+  - Run-time (method overriding).  
+- **Example**: Person acts as a student, friend, or employee in different situations.  
 
-- **Definition**: Ability to take many forms, allowing methods to behave differently based on objects.
-- **Types**: Compile-time (method overloading) & Run-time (method overriding).
-- **Example**: _A person acts as a student, friend, or employee in different situations._
-
-**Java Code Example (Overriding):**
-
+**Java Example (Overriding)**:  
 ```java
 class Shape {
     void draw() {
@@ -230,46 +235,29 @@ public class Main {
     }
 }
 ```
-
-_Output:_  
+**Output**:  
+```
 Drawing a circle.
+``` 
 
 ---
 
+## 🔀 **Polymorphism Types**  
 
-### **Summary Table**
+### 1️⃣ **Compile-Time Polymorphism (Method Overloading)**  
 
-| **Principle** | **Definition**                               | **Real-Life Example**              |
-| ------------- | -------------------------------------------- | ---------------------------------- |
-| Inheritance   | Reuse properties of a parent class.          | Child inherits parent's traits.    |
-| Polymorphism  | Same method behaves differently in contexts. | Person: Student, Friend, Employee. |
-| Encapsulation | Restrict access, exposing through methods.   | Medicine in a capsule.             |
-| Abstraction   | Show relevant features, hide internal logic. | Using an ATM.                      |
+| **Aspect**          | **Details**                                         |
+|----------------------|-----------------------------------------------------|
+| **Definition**       | Same method name with different parameter lists.    |
+| **Achieved Through** | Method Overloading.                                 |
+| **Resolved At**      | Compile-time.                                       |
+| **Key Points**       | - Changes in method signature (parameters).         |
+|                      | - Improves readability and reusability.             |
+| **Real-Life Example**| A calculator adds integers, floats, or doubles.     |
 
-
----
-
-### **Polymorphism Types**
-
----
-
-#### **1. Compile-Time Polymorphism (Method Overloading)**
-
-- **Definition**: Same method name with different parameter lists in the same class.  
-- **Achieved Through**: Method Overloading.  
-- **Resolved At**: Compile-time.
-
-**Key Points:**
-- Method signature changes (number or type of parameters).
-- Enhances readability and reusability.
-
-**Real-Life Example**:  
-A calculator can add integers, floats, or doubles based on inputs.
-
-**Java Code Example:**
+**Java Example**:  
 ```java
 class Calculator {  
-    // Overloaded methods  
     int add(int a, int b) {  
         return a + b;  
     }  
@@ -292,27 +280,27 @@ public class Main {
     }  
 }
 ```
-**Output:**  
+**Output**:  
+```
 8  
 9.0  
 6  
+```
 
 ---
 
-#### **2. Run-Time Polymorphism (Method Overriding)**
+### 2️⃣ **Run-Time Polymorphism (Method Overriding)**  
 
-- **Definition**: Subclass provides a specific implementation of a method already defined in the parent class.  
-- **Achieved Through**: Method Overriding.  
-- **Resolved At**: Run-time.
+| **Aspect**          | **Details**                                         |
+|----------------------|-----------------------------------------------------|
+| **Definition**       | Subclass provides specific implementation for a parent class method. |
+| **Achieved Through** | Method Overriding.                                  |
+| **Resolved At**      | Run-time.                                           |
+| **Key Points**       | - Requires inheritance and `@Override`.             |
+|                      | - Enables dynamic behavior based on object type.    |
+| **Real-Life Example**| Vehicles move differently: car on roads, boat on water.|
 
-**Key Points:**
-- Uses inheritance and the `@Override` annotation.
-- Enables dynamic method invocation based on the object type.
-
-**Real-Life Example**:  
-A vehicle can move differently based on its type (e.g., car, bike, or train).
-
-**Java Code Example:**
+**Java Example**:  
 ```java
 class Vehicle {  
     void move() {  
@@ -346,44 +334,44 @@ public class Main {
     }  
 }
 ```
-**Output:**  
+**Output**:  
+```
 Car moves on roads.  
 Boat sails on water.  
+```
 
 ---
 
-### **Comparison: Method Overloading vs. Method Overriding**
+## ⚔️ **Comparison: Method Overloading vs Method Overriding**  
 
-| **Feature**              | **Method Overloading**                     | **Method Overriding**                   |
-|---------------------------|--------------------------------------------|-----------------------------------------|
-| **Binding**               | Compile-time                              | Run-time                                |
-| **Inheritance**           | Not required                              | Requires inheritance                    |
-| **Method Signature**      | Same name, different parameters            | Same name and parameters                |
-| **Usage**                 | Improves readability                      | Provides specific subclass behavior     |
-| **Example**               | `add(int, int)` vs. `add(double, double)` | `move()` in `Vehicle` vs. `Car`         |  
-
-
-### **Abstract Class vs Interface in Java**
+| **Feature**         | **Method Overloading**            | **Method Overriding**               |
+|----------------------|------------------------------------|--------------------------------------|
+| **Binding**          | Compile-time                     | Run-time                             |
+| **Inheritance**      | Not required                     | Requires inheritance                 |
+| **Method Signature** | Same name, different parameters  | Same name and parameters             |
+| **Usage**            | Improves readability             | Provides specific subclass behavior  |
+| **Example**          | `add(int, int)` vs `add(double, double)` | `move()` in `Vehicle` vs `Car`       |
 
 ---
 
-#### **1. Abstract Class**
-- **Definition**: A class that can have both abstract (no implementation) and concrete (with implementation) methods.  
-- **Purpose**: To provide a base class with shared functionality while enforcing some method implementation in child classes.  
-- **Key Features**:  
-  - Can have abstract and non-abstract methods.  
-  - Can have constructors, fields, and static methods.  
-  - Supports single inheritance.
+## 🛠️ **Abstract Class vs Interface**  
 
-**Real-Life Example**:  
-A *Vehicle* is an abstract concept; cars and bikes inherit common behavior but implement specific functionality.
+### 1️⃣ **Abstract Class**  
 
-**Java Code Example:**
+| **Aspect**          | **Details**                                         |
+|----------------------|-----------------------------------------------------|
+| **Definition**       | Can have abstract (no body) and concrete (implemented) methods. |
+| **Purpose**          | Provides shared functionality and enforces method implementation. |
+| **Key Features**     | - Supports single inheritance.                     |
+|                      | - Can have fields, constructors, and static methods.|
+| **Real-Life Example**| A `Vehicle` concept shared by cars, bikes, etc.     |
+
+**Java Example**:  
 ```java
 abstract class Vehicle {  
     abstract void move();  // Abstract method (no body)  
 
-    void fuel() {  // Concrete method (implemented)  
+    void fuel() {  // Concrete method  
         System.out.println("Vehicle needs fuel.");
     }  
 }  
@@ -403,24 +391,26 @@ public class Main {
     }  
 }
 ```
-**Output:**  
+**Output**:  
+```
 Car moves on roads.  
 Vehicle needs fuel.  
+```
 
 ---
 
-#### **2. Interface**
-- **Definition**: A blueprint for a class that contains only abstract methods (prior to Java 8). From Java 8, interfaces can have default methods (with implementation) and static methods.  
-- **Purpose**: To achieve full abstraction and support multiple inheritance.  
-- **Key Features**:  
-  - All methods are implicitly public and abstract (unless specified otherwise).  
-  - Cannot have constructors or instance variables (only constants).  
-  - A class can implement multiple interfaces.  
+### 2️⃣ **Interface**  
 
-**Real-Life Example**:  
-A *RemoteControl* interface defines standard methods (e.g., turnOn/turnOff) for any device, such as TVs or ACs.
+| **Aspect**          | **Details**                                         |
+|----------------------|-----------------------------------------------------|
+| **Definition**       | A blueprint with only abstract methods (prior to Java 8). From Java 8, supports default/static methods. |
+| **Purpose**          | Achieves full abstraction and supports multiple inheritance. |
+| **Key Features**     | - All methods are `public` and `abstract` by default. |
+|                      | - Only constants allowed, no constructors.          |
+|                      | - A class can implement multiple interfaces.        |
+| **Real-Life Example**| A `RemoteControl` interface for devices like TVs or ACs.|
 
-**Java Code Example:**
+**Java Example**:  
 ```java
 interface RemoteControl {  
     void turnOn();  // Abstract method  
@@ -453,49 +443,50 @@ public class Main {
     }  
 }
 ```
-**Output:**  
+**Output**:  
+```
 TV is now ON.  
 Resetting to factory settings.  
 TV is now OFF.  
+```
 
 ---
 
-### **Comparison: Abstract Class vs Interface**
+## 🆚 **Abstract Class vs Interface**  
 
-| **Feature**                  | **Abstract Class**                                   | **Interface**                                 |
-|-------------------------------|----------------------------------------------------|----------------------------------------------|
-| **Methods**                  | Abstract and concrete methods.                     | Abstract methods (default methods since Java 8). |
-| **Fields**                   | Can have instance variables.                       | Only constants (public, static, final).      |
-| **Inheritance**              | Single inheritance.                                | Multiple inheritance supported.             |
-| **Access Modifiers**         | Can have private, protected, and public methods.   | All methods are `public` by default.        |
-| **Constructors**             | Allowed.                                           | Not allowed.                                |
-| **Usage**                    | Use when classes share common functionality.       | Use to define a contract for implementation. |
+| **Feature**          | **Abstract Class**                                  | **Interface**                              |
+|-----------------------|----------------------------------------------------|-------------------------------------------|
+| **Methods**           | Abstract and concrete methods.                     | Abstract methods; default methods since Java 8. |
+| **Fields**            | Can have instance variables.                       | Only constants (`public static final`).    |
+| **Inheritance**       | Single inheritance.                                | Supports multiple inheritance.             |
+| **Access Modifiers**  | Can have private, protected, and public methods.   | All methods are `public` by default.       |
+| **Constructors**      | Allowed.                                           | Not allowed.                               |
+| **Usage**             | Use for shared functionality among related classes.| Use to define a contract for implementation. |
 
----
-
-**Key Takeaway**:  
-- Use an **abstract class** when you want to share code among related classes.  
-- Use an **interface** to define a contract that unrelated classes can implement.  
-
-### Types of Constructors
-
-| **Type of Constructor**                               | **Description**                                        | **Example**                                      |
-|-------------------------------------------------------|--------------------------------------------------------|--------------------------------------------------|
-| **Default Constructor**                               | A constructor with no parameters. Automatically provided by Java if no other constructors are defined. | Used when no specific initialization is required. |
-| **Parameterized Constructor**                         | A constructor that accepts parameters to initialize object attributes at the time of object creation. | Used when you need to initialize object with specific values. |
-| **Copy Constructor**                                  | A constructor that creates a new object by copying values from another object of the same class. | Used to create a copy of an existing object. |
-| **Private Constructor**                               | A constructor with a private access modifier, preventing object creation outside the class. | Used in Singleton design pattern. |
+**Key Takeaways**:  
+- Use **Abstract Class** to share common functionality among related classes.  
+- Use **Interface** to define a contract that unrelated classes can implement.  
 
 ---
 
-### **Default Constructor Example:**
+## 🛠️ **Types of Constructors**  
+
+| **Type**              | **Description**                                                    | **Example Use**                           |
+|-----------------------|--------------------------------------------------------------------|-------------------------------------------|
+| **Default Constructor** | No parameters; auto-generated if no other constructors exist.    | When no specific initialization is needed.|
+| **Parameterized Constructor** | Accepts parameters to initialize attributes.              | To set specific values during object creation. |
+| **Copy Constructor**   | Copies values from another object of the same class.             | To create a copy of an existing object.   |
+| **Private Constructor** | Restricts instantiation outside the class.                      | Used in Singleton Design Pattern.         |
+
+### **Examples**  
+
+1️⃣ **Default Constructor**:  
 ```java
 class Car {
     String model;
     int year;
 
-    // Default constructor
-    public Car() {
+    public Car() {  // Default constructor
         model = "Unknown";
         year = 0;
     }
@@ -508,21 +499,18 @@ class Car {
 public class Main {
     public static void main(String[] args) {
         Car car = new Car();  // Default constructor called
-        car.display();         // Output: Model: Unknown, Year: 0
+        car.display();        // Output: Model: Unknown, Year: 0
     }
 }
 ```
 
----
-
-### **Parameterized Constructor Example:**
+2️⃣ **Parameterized Constructor**:  
 ```java
 class Car {
     String model;
     int year;
 
-    // Parameterized constructor
-    public Car(String model, int year) {
+    public Car(String model, int year) {  // Parameterized constructor
         this.model = model;
         this.year = year;
     }
@@ -534,28 +522,24 @@ class Car {
 
 public class Main {
     public static void main(String[] args) {
-        Car car = new Car("Tesla", 2023);  // Parameterized constructor called
+        Car car = new Car("Tesla", 2023);  // Initialize with values
         car.display();                     // Output: Model: Tesla, Year: 2023
     }
 }
 ```
 
----
-
-### **Copy Constructor Example:**
+3️⃣ **Copy Constructor**:  
 ```java
 class Car {
     String model;
     int year;
 
-    // Parameterized constructor
-    public Car(String model, int year) {
+    public Car(String model, int year) {  // Parameterized constructor
         this.model = model;
         this.year = year;
     }
 
-    // Copy constructor
-    public Car(Car car) {
+    public Car(Car car) {  // Copy constructor
         this.model = car.model;
         this.year = car.year;
     }
@@ -567,24 +551,20 @@ class Car {
 
 public class Main {
     public static void main(String[] args) {
-        Car originalCar = new Car("Tesla", 2023);  // Original object
-        Car copiedCar = new Car(originalCar);      // Copy constructor called
-        copiedCar.display();                       // Output: Model: Tesla, Year: 2023
+        Car original = new Car("Tesla", 2023);  // Original object
+        Car copy = new Car(original);          // Copy constructor
+        copy.display();                        // Output: Model: Tesla, Year: 2023
     }
 }
 ```
 
----
-
-### **Private Constructor Example:**
+4️⃣ **Private Constructor (Singleton)**:  
 ```java
 class Singleton {
     private static Singleton instance;
 
-    // Private constructor
-    private Singleton() {}
+    private Singleton() {}  // Private constructor
 
-    // Static method to get the single instance
     public static Singleton getInstance() {
         if (instance == null) {
             instance = new Singleton();
@@ -595,21 +575,26 @@ class Singleton {
 
 public class Main {
     public static void main(String[] args) {
-        Singleton obj1 = Singleton.getInstance();  // Accessing Singleton via getInstance method
+        Singleton obj1 = Singleton.getInstance();
         Singleton obj2 = Singleton.getInstance();
         System.out.println(obj1 == obj2);  // Output: true (same instance)
     }
 }
-
-
 ```
-### Shallow Vs Deep Copy
----
-| **Shallow Copy**                                       | **Deep Copy**                                      |
-|--------------------------------------------------------|----------------------------------------------------|
-| Creates a new object, but elements within the object are still references to the original objects. | Creates a new object and recursively copies all objects, ensuring the original object and the copy do not share any references. |
-| Changes in the nested objects of the copied object reflect in the original object. | Changes in nested objects do not affect the original object. |
-| Faster because it only copies references to the objects. | Slower because it copies all elements recursively. |
-| Example: Used when only the outer structure needs to be copied. | Example: Used when both the outer and inner structures need to be independent. |
 
 ---
+
+## 🆚 **Shallow Copy vs Deep Copy**  
+
+| **Shallow Copy**                                  | **Deep Copy**                              |
+|--------------------------------------------------|-------------------------------------------|
+| Copies object references; changes in nested objects reflect in both copies. | Copies objects recursively, creating independent copies. |
+| Faster (only references are copied).             | Slower (requires recursive copying).      |
+| When only the outer structure needs duplication. | When full independence between objects is required. |
+
+### **Examples**  
+
+- **Shallow Copy**: Default object copying in Java (`clone()` method without deep logic).  
+- **Deep Copy**: Custom implementation to duplicate nested objects.  
+
+
