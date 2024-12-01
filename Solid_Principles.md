@@ -1,23 +1,27 @@
-Solid Principles in Java help you write clean, organized, and maintainable code. Think of them as "rules" to avoid confusion and bugs. Here's a simple explanation with examples:  
+
+# 🌟 **SOLID Principles in Java**  
+The **SOLID principles** help write **clean**, **organized**, and **maintainable** code. These "rules" prevent confusion and bugs, enabling scalable development.  
 
 ---
 
-### 1. **Single Responsibility Principle (SRP)**  
-**Rule:** A class should do only one thing.  
+## 🔥 **1. Single Responsibility Principle (SRP)**  
+**Rule**: A class should have only **one responsibility**.  
 
-**Example:**  
-A class `Student` should only manage student details, not save data to a file.  
+### 💡 **Example**  
+A `Student` class should manage **only student details**, not handle saving data.  
+
 ```java
-// BAD
+// ❌ BAD
 class Student {
     void getDetails() { /* Fetch student details */ }
     void saveToFile() { /* Save to file */ } // Unrelated work
 }
 
-// GOOD
+// ✅ GOOD
 class Student {
     void getDetails() { /* Fetch student details */ }
 }
+
 class FileManager {
     void saveToFile() { /* Save to file */ }
 }
@@ -25,22 +29,23 @@ class FileManager {
 
 ---
 
-### 2. **Open/Closed Principle (OCP)**  
-**Rule:** A class should be open for extension but closed for modification.  
+## 🔥 **2. Open/Closed Principle (OCP)**  
+**Rule**: Classes should be **open for extension** but **closed for modification**.  
 
-**Example:**  
-Adding new shapes without changing existing code.  
+### 💡 **Example**  
+Adding new shapes without changing existing code:  
+
 ```java
-// BAD
+// ❌ BAD
 class AreaCalculator {
     double calculate(String shape, double radius, double length) {
         if (shape.equals("Circle")) return Math.PI * radius * radius;
-        else if (shape.equals("Square")) return length * length; 
+        else if (shape.equals("Square")) return length * length;
         // Keep adding conditions for new shapes
     }
 }
 
-// GOOD
+// ✅ GOOD
 abstract class Shape {
     abstract double calculateArea();
 }
@@ -60,14 +65,14 @@ class Square extends Shape {
 
 ---
 
-### 3. **Liskov Substitution Principle (LSP)**  
-**Rule:** Subclasses should work as a substitute for their parent class without breaking anything.  
+## 🔥 **3. Liskov Substitution Principle (LSP)**  
+**Rule**: Subclasses should work as substitutes for their parent class **without breaking behavior**.  
 
-**Example:**  
-If `Bird` is a parent class, subclasses like `Sparrow` should behave like a bird.  
+### 💡 **Example**  
+If `Bird` is the parent class, subclasses like `Sparrow` should behave like birds.
 
 ```java
-// BAD
+// ❌ BAD
 class Bird {
     void fly() { System.out.println("Flying"); }
 }
@@ -76,7 +81,7 @@ class Penguin extends Bird {
     // Penguins don't fly! Violates LSP
 }
 
-// GOOD
+// ✅ GOOD
 abstract class Bird {
     abstract void move();
 }
@@ -92,12 +97,13 @@ class Penguin extends Bird {
 
 ---
 
-### 4. **Interface Segregation Principle (ISP)**  
-**Rule:** Don’t force a class to implement methods it doesn’t need.  
+## 🔥 **4. Interface Segregation Principle (ISP)**  
+**Rule**: Don’t force a class to implement methods it **doesn't need**.  
 
-**Example:**  
+### 💡 **Example**  
+
 ```java
-// BAD
+// ❌ BAD
 interface Animal {
     void fly();
     void swim();
@@ -108,7 +114,7 @@ class Dog implements Animal {
     public void swim() { System.out.println("Dog swimming"); }
 }
 
-// GOOD
+// ✅ GOOD
 interface Flyable {
     void fly();
 }
@@ -124,18 +130,19 @@ class Dog implements Swimmable {
 
 ---
 
-### 5. **Dependency Inversion Principle (DIP)**  
-**Rule:** High-level modules (main code) should not depend on low-level modules (details). Both should depend on abstractions (interfaces).  
+## 🔥 **5. Dependency Inversion Principle (DIP)**  
+**Rule**: High-level modules should depend on **abstractions**, not **low-level details**.  
 
-**Example:**  
+### 💡 **Example**  
+
 ```java
-// BAD
+// ❌ BAD
 class Keyboard { /* Low-level module */ }
 class Computer {
     Keyboard keyboard = new Keyboard(); // Hardcoded dependency
 }
 
-// GOOD
+// ✅ GOOD
 interface InputDevice { /* Abstract */ }
 class Keyboard implements InputDevice { /* Low-level */ }
 class Computer {
@@ -146,28 +153,34 @@ class Computer {
 
 ---
 
-### Why Use These?  
-- Makes your code easier to understand.  
-- Reduces bugs and errors.  
-- Easier to add new features without breaking old code.  
-
-
-Here’s a complete **Low-Level Design (LLD)** example of a **Library Management System** in Java, following SOLID principles:  
+## 🎯 **Why Use These Principles?**  
+- 🛠️ **Cleaner code** that's easier to understand.  
+- 🔍 **Reduces bugs** and unexpected behavior.  
+- 🚀 **Simplifies adding features** without breaking existing code.  
 
 ---
 
-### **Scenario**  
-The system allows users to:  
-1. Search for books by title or author.  
-2. Borrow and return books.  
-3. Maintain user and book data.
+
+# 📚 **Library Management System** (LLD Example in Java)  
+
+This system demonstrates the **SOLID principles** in action to design a **scalable** and **maintainable** Library Management System.
 
 ---
 
-### **Code**  
+## 🎯 **Scenario**  
 
-#### **1. Book Class**
-Represents a book in the library.  
+The Library Management System allows users to:  
+- 🔍 **Search for books** by title or author.  
+- 📖 **Borrow and return books.**  
+- 💾 **Maintain user and book data.**  
+
+---
+
+## 💡 **Code Implementation**  
+
+### 🔸 **1. Book Class**  
+The `Book` class represents a book in the library. It maintains its data (e.g., title, author, availability) and provides methods to borrow or return the book.
+
 ```java
 class Book {
     private String id;
@@ -194,8 +207,9 @@ class Book {
 
 ---
 
-#### **2. User Class**
-Represents a library user.  
+### 🔸 **2. User Class**  
+The `User` class represents a library user with basic details like `userId` and `name`.
+
 ```java
 class User {
     private String userId;
@@ -213,8 +227,9 @@ class User {
 
 ---
 
-#### **3. Library Class**
-Manages the collection of books and user interactions.  
+### 🔸 **3. Library Class**  
+The `Library` class manages the collection of books and provides functionality for searching, borrowing, and returning books.
+
 ```java
 import java.util.ArrayList;
 import java.util.List;
@@ -270,8 +285,9 @@ class Library {
 
 ---
 
-#### **4. Main Class**
-Tests the Library Management System.  
+### 🔸 **4. Main Class**  
+The `LibraryManagementSystem` class tests the functionality of the library system.
+
 ```java
 public class LibraryManagementSystem {
     public static void main(String[] args) {
@@ -309,8 +325,9 @@ public class LibraryManagementSystem {
 
 ---
 
-### **Output**
-```plaintext
+## 🛠️ **Output**  
+
+```
 Search Results for 'Java Basics':
 Java Basics by John Doe
 Alice borrowed Java Basics
@@ -321,60 +338,48 @@ Invalid return attempt.
 
 ---
 
-### **Explanation**  
-1. **SOLID Applied:**
-   - **SRP:** Each class has a single responsibility (e.g., `Book` for book data, `Library` for management).  
-   - **OCP:** Easily extend the system (e.g., add new features like user membership).  
-   - **LSP:** Subclasses (if created) can replace parent classes without issues.  
-   - **ISP:** Interfaces could be introduced if required (e.g., for different types of books).  
-   - **DIP:** `Library` interacts with `Book` and `User` through methods, no hard coupling.  
+## 📌 **SOLID Principles Applied**  
 
-2. The design is modular and flexible for future extensions, like adding genres or late fees.
-
-
-# Designing a Parking Lot System
-
-## Requirements
-1. The parking lot should have multiple levels, each level with a certain number of parking spots.
-2. The parking lot should support different types of vehicles, such as cars, motorcycles, and trucks.
-3. Each parking spot should be able to accommodate a specific type of vehicle.
-4. The system should assign a parking spot to a vehicle upon entry and release it when the vehicle exits.
-5. The system should track the availability of parking spots and provide real-time information to customers.
-6. The system should handle multiple entry and exit points and support concurrent access.
-
-
-## Classes, Interfaces and Enumerations
-1. The **ParkingLot** class follows the Singleton pattern to ensure only one instance of the parking lot exists. It maintains a list of levels and provides methods to park and unpark vehicles.
-2. The **Level** class represents a level in the parking lot and contains a list of parking spots. It handles parking and unparking of vehicles within the level.
-3. The **ParkingSpot** class represents an individual parking spot and tracks the availability and the parked vehicle.
-4. The **Vehicle** class is an abstract base class for different types of vehicles. It is extended by Car, Motorcycle, and Truck classes.
-5. The **VehicleType** enum defines the different types of vehicles supported by the parking lot.
-6. Multi-threading is achieved through the use of synchronized keyword on critical sections to ensure thread safety.
-7. The **Main** class demonstrates the usage of the parking lot system.
-
-
-Here is a detailed Low-Level Design (LLD) for a **Parking Lot System** based on the provided requirements:  
+- **SRP**: Each class handles a single responsibility: `Book` for book details, `User` for user information, and `Library` for operations.  
+- **OCP**: Easily extendable (e.g., adding genres or additional features).  
+- **LSP**: Subclasses (if introduced) will follow their parent class without breaking behavior.  
+- **ISP**: Interfaces can be introduced for specific types of books (e.g., EBooks, AudioBooks).  
+- **DIP**: `Library` interacts with `Book` and `User` via abstraction methods, avoiding hard dependencies.  
 
 ---
 
-### **1. Enumerations**
 
-#### `VehicleType`  
-Defines the types of vehicles supported.  
+# 🚗 **Parking Lot System** (LLD Example in Java)  
+
+This system demonstrates a **scalable**, **thread-safe**, and **maintainable** Parking Lot design based on **SOLID principles**.
+
+---
+
+## 🎯 **Requirements**  
+
+1. 🏢 Multiple levels, each with a set number of spots.  
+2. 🚗 Support for different vehicle types: cars, motorcycles, trucks.  
+3. 📍 Assign and release parking spots dynamically.  
+4. 🔄 Track real-time availability of parking spots.  
+5. 🅿️ Handle multiple entry and exit points with concurrency.
+
+---
+
+## 💡 **Code Implementation**  
+
+### 🔸 **1. Enumerations**  
+
 ```java
 enum VehicleType {
-    CAR,
-    MOTORCYCLE,
-    TRUCK
+    CAR, MOTORCYCLE, TRUCK
 }
 ```
 
 ---
 
-### **2. Vehicle Class Hierarchy**
+### 🔸 **2. Vehicle Class Hierarchy**  
 
-#### `Vehicle`  
-Abstract base class for all vehicles.  
+#### Abstract Class: `Vehicle`
 ```java
 abstract class Vehicle {
     private String licensePlate;
@@ -385,17 +390,12 @@ abstract class Vehicle {
         this.type = type;
     }
 
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public VehicleType getType() {
-        return type;
-    }
+    public String getLicensePlate() { return licensePlate; }
+    public VehicleType getType() { return type; }
 }
 ```
 
-#### Subclasses  
+#### Subclasses: `Car`, `Motorcycle`, `Truck`
 ```java
 class Car extends Vehicle {
     public Car(String licensePlate) {
@@ -418,8 +418,10 @@ class Truck extends Vehicle {
 
 ---
 
-### **3. ParkingSpot Class**  
-Represents an individual parking spot.  
+### 🔸 **3. ParkingSpot Class**  
+
+Represents a parking spot and ensures thread safety.  
+
 ```java
 class ParkingSpot {
     private VehicleType spotType;
@@ -429,14 +431,6 @@ class ParkingSpot {
     public ParkingSpot(VehicleType spotType) {
         this.spotType = spotType;
         this.isAvailable = true;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public VehicleType getSpotType() {
-        return spotType;
     }
 
     public synchronized boolean parkVehicle(Vehicle vehicle) {
@@ -453,16 +447,17 @@ class ParkingSpot {
         this.isAvailable = true;
     }
 
-    public Vehicle getParkedVehicle() {
-        return parkedVehicle;
-    }
+    public boolean isAvailable() { return isAvailable; }
+    public Vehicle getParkedVehicle() { return parkedVehicle; }
 }
 ```
 
 ---
 
-### **4. Level Class**  
-Represents a level in the parking lot.  
+### 🔸 **4. Level Class**  
+
+Handles parking and releasing vehicles at a specific level.  
+
 ```java
 import java.util.ArrayList;
 import java.util.List;
@@ -509,8 +504,10 @@ class Level {
 
 ---
 
-### **5. ParkingLot Class (Singleton)**  
-Represents the entire parking lot.  
+### 🔸 **5. ParkingLot Class** (Singleton)  
+
+Represents the entire parking lot and ensures only one instance exists.  
+
 ```java
 import java.util.ArrayList;
 import java.util.List;
@@ -560,8 +557,10 @@ class ParkingLot {
 
 ---
 
-### **6. Main Class**  
-Demonstrates the usage of the system.  
+### 🔸 **6. Main Class**  
+
+Demonstrates the usage of the parking lot system.  
+
 ```java
 public class Main {
     public static void main(String[] args) {
@@ -577,14 +576,14 @@ public class Main {
         Vehicle truck1 = new Truck("TRUCK123");
 
         // Park Vehicles
-        parkingLot.parkVehicle(car1);   // Parks in Level 0
-        parkingLot.parkVehicle(bike1);  // Parks in Level 1
-        parkingLot.parkVehicle(truck1); // Parks in Level 2
+        parkingLot.parkVehicle(car1);
+        parkingLot.parkVehicle(bike1);
+        parkingLot.parkVehicle(truck1);
 
         // Display Available Spots
         parkingLot.displayAvailableSpots();
 
-        // Release Vehicle
+        // Release Vehicles
         parkingLot.releaseVehicle("CAR123");
         parkingLot.releaseVehicle("BIKE123");
 
@@ -596,8 +595,9 @@ public class Main {
 
 ---
 
-### **Output**
-```plaintext
+## 🛠️ **Output**  
+
+```
 Vehicle parked at level 0
 Vehicle parked at level 1
 Vehicle parked at level 2
@@ -613,8 +613,10 @@ Level 2: 0 spots available.
 
 ---
 
-### **Key Features**  
-1. **Thread-Safety:** The `synchronized` keyword ensures thread-safe operations on parking spots.  
-2. **Singleton Pattern:** Ensures a single `ParkingLot` instance for the entire system.  
-3. **Modular Design:** Each class handles one responsibility (SRP).  
-4. **Scalable:** Adding new levels or vehicle types is straightforward.  
+## 📌 **Key Features**  
+
+- **Thread-Safety**: Ensured using `synchronized` keyword for critical sections.  
+- **Singleton Pattern**: Maintains a single `ParkingLot` instance.  
+- **Modular Design**: Each class handles one responsibility (**SRP**).  
+- **Scalability**: Easily add new levels or support additional vehicle types.  
+
